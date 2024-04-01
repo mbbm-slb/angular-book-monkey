@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Book } from '../shared/book';
 
 @Component({
   selector: 'bm-book-details',
@@ -6,5 +7,10 @@ import { Component } from '@angular/core';
   styleUrl: './book-details.component.css'
 })
 export class BookDetailsComponent {
+  @Input() book?: Book;
+  @Output() leave = new EventEmitter<void>();
 
+  doLeave() {
+    this.leave.emit();
+  }
 }
