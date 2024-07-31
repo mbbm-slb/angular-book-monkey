@@ -25,4 +25,8 @@ export class BookStoreService {
   remove(isbn: string): Observable<unknown> {
     return this.http.delete(`${this.apiURL}/book/${isbn}`);
   }
+
+  restore(): Observable<unknown> {
+    return this.http.delete(`${this.apiURL}/books`);
+  }
 }
