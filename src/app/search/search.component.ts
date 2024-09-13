@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { debounceTime, filter, Subject } from 'rxjs';
+import { debounceTime, distinctUntilChanged, filter, Subject } from 'rxjs';
 
 @Component({
   selector: 'bm-search',
@@ -13,6 +13,7 @@ export class SearchComponent {
     this.input$.pipe(
       filter(term => term.length >= 3),
       debounceTime(500),
+      distinctUntilChanged()
     )
     .subscribe(console.log);
   }
