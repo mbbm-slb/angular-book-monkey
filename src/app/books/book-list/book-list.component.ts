@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 
 import { BookStoreService } from '../../shared/book-store.service';
 import { Book } from '../../shared/book';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'bm-book-list',
@@ -9,11 +10,9 @@ import { Book } from '../../shared/book';
   styleUrls: ['./book-list.component.css']
 })
 export class BookListComponent {
-  books: Book[] = [];
+  books$: Observable<Book[]>;
 
   constructor(private service: BookStoreService) {
-    this.service.getAll().subscribe(books => {
-      this.books = books;
-    } );
+    this.books$ = this.service.getAll();
   }
 }

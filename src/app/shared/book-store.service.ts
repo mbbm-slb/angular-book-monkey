@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { catchError, Observable, of } from 'rxjs';
 
 import { Book } from './book';
 
@@ -9,13 +9,19 @@ import { Book } from './book';
 })
 export class BookStoreService {
   private apiURL = 'https://api5.angular-buch.com';
+  //private apiURL = 'https://jbt.et-jar-nischt.com'; // non existing URL to trigger an error 
   private books: Book[] = [];
 
   constructor(private http: HttpClient) {
   }
 
   getAll(): Observable<Book[]> {
-    return this.http.get<Book[]>(`${this.apiURL}/books`);
+    return this.http.get<Book[]>(`${this.apiURL}/books`).pipe(
+      catchError(err => {
+        console.error(err);
+        return of([]);
+      })
+    );
   }
 
   getSingle(isbn: string): Observable<Book> {
@@ -28,5 +34,14 @@ export class BookStoreService {
 
   restore(): Observable<unknown> {
     return this.http.delete(`${this.apiURL}/books`);
+  }
+
+  getAllSearch(term: string): Observable<Book[]> {
+    return this.http.get<Book[]>(`${this.apiURL}/books/search/${term}`).pipe(
+      catchError(err => {
+        console.error(err);
+        return of([]);
+      })
+    );
   }
 }
