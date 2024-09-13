@@ -29,4 +29,8 @@ export class BookStoreService {
   restore(): Observable<unknown> {
     return this.http.delete(`${this.apiURL}/books`);
   }
+
+  getAllSearch(term: string): Observable<Book[]> {
+    return this.http.get<Book[]>(`${this.apiURL}/books/search/${term}`);
+  }
 }
