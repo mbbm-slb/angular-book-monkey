@@ -1,1 +1,5 @@
-<p>search works!</p>
+<input type="search"
+    autocomplete="off"
+    aria-label="Search"
+    #searchInput
+    (input)="input$.next(searchInput.value)">
