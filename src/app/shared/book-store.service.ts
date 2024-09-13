@@ -8,8 +8,8 @@ import { Book } from './book';
   providedIn: 'root'
 })
 export class BookStoreService {
-  //private apiURL = 'https://api5.angular-buch.com';
-  private apiURL = 'https://jbt.et-jar-nischt.com'; // non existing URL to trigger an error 
+  private apiURL = 'https://api5.angular-buch.com';
+  //private apiURL = 'https://jbt.et-jar-nischt.com'; // non existing URL to trigger an error 
   private books: Book[] = [];
 
   constructor(private http: HttpClient) {
