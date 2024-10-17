@@ -44,4 +44,9 @@ export class BookStoreService {
       })
     );
   }
+
+  create(book: Book): Observable<Book> {
+    return this.http
+      .post<Book>(`${this.apiURL}/books`, book);
+  }
 }
