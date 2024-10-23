@@ -1,4 +1,4 @@
-import { Component,  Output, EventEmitter } from '@angular/core';
+import { Component,  Output, EventEmitter, Input, OnChanges } from '@angular/core';
 import { Book } from '../../shared/book';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 
@@ -7,7 +7,8 @@ import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
   templateUrl: './book-form.component.html',
   styleUrl: './book-form.component.css'
 })
-export class BookFormComponent {
+export class BookFormComponent implements OnChanges {
+    @Input() book?: Book;
     @Output() submitBook = new EventEmitter<Book>();
 
     form = new FormGroup({
@@ -48,9 +49,20 @@ export class BookFormComponent {
       this.authors.push(new FormControl('', { nonNullable: true }));
     }
 
+    ngOnChanges(): void {
+        if (this.book) {
+          this.setFormValues(this.book);
+        }
+    }
+
     private buildAuthorsArray(authors: string[]) {
       return new FormArray(
         authors.map(v => new FormControl(v, { nonNullable: true }))
       )
+    }
+
+    private setFormValues(book: Book) {
+      this.form.patchValue(book);
+      this.form.setControl('authors', this.buildAuthorsArray(book.authors));
     }
 }
