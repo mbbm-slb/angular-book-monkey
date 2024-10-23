@@ -27,9 +27,7 @@ export class BookFormComponent {
       description: new FormControl('', { nonNullable: true }),
       published: new FormControl('', { nonNullable: true }),
       thumbnailUrl: new FormControl('', { nonNullable: true }),
-      authors: new FormArray([
-        new FormControl('', { nonNullable: true }),
-      ]),
+      authors: this.buildAuthorsArray(['']),
     });
 
     submitForm() {
@@ -48,5 +46,11 @@ export class BookFormComponent {
 
     addAuthorControl() {
       this.authors.push(new FormControl('', { nonNullable: true }));
+    }
+
+    private buildAuthorsArray(authors: string[]) {
+      return new FormArray(
+        authors.map(v => new FormControl(v, { nonNullable: true }))
+      )
     }
 }
