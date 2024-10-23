@@ -52,6 +52,9 @@ export class BookFormComponent implements OnChanges {
     ngOnChanges(): void {
         if (this.book) {
           this.setFormValues(this.book);
+          this.setEditMode(true);
+        } else {
+          this.setEditMode(false);
         }
     }
 
@@ -64,5 +67,15 @@ export class BookFormComponent implements OnChanges {
     private setFormValues(book: Book) {
       this.form.patchValue(book);
       this.form.setControl('authors', this.buildAuthorsArray(book.authors));
+    }
+
+    private setEditMode(isEditing: boolean) {
+      const isbnControl = this.form.controls.isbn;
+
+      if (isEditing) {
+        isbnControl.disable();
+      } else {
+        isbnControl.enable();
+      }
     }
 }
