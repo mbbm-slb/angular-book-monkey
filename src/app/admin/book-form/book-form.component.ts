@@ -44,4 +44,8 @@ export class BookFormComponent {
     get authors() {
       return this.form.controls.authors;
     }
+
+    addAuthorControl() {
+      this.authors.push(new FormControl('', { nonNullable: true }));
+    }
 }
