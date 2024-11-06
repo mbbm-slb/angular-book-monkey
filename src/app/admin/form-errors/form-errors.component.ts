@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
+import { FormGroupDirective } from '@angular/forms';
 
 @Component({
   selector: 'bm-form-errors',
@@ -6,5 +7,24 @@ import { Component } from '@angular/core';
   styleUrl: './form-errors.component.css'
 })
 export class FormErrorsComponent {
+  @Input() controlName?: string;
+  @Input() messages: { [errorCode: string]: string } = {};
 
+  constructor(private form: FormGroupDirective) {}
+  
+  get errors(): string[] {
+    if (!this.controlName || !this.messages) {
+      return [];
+    }
+
+    const control = this.form.control.get(this.controlName);
+
+    if (!control || !control.errors || !control.touched) {
+      return [];
+    }
+
+    return Object.keys(control.errors).map(errorCode => {
+      return this.messages[errorCode];
+    });
+  }
 }
