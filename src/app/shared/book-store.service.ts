@@ -53,4 +53,10 @@ export class BookStoreService {
   update(book: Book): Observable<Book> {
     return this.http.put<Book>(`${this.apiURL}/book/${book.isbn}`, book);
   }
+
+  check(isbn: string): Observable<boolean> {
+    return this.http.get<boolean>(
+      `${this.apiURL}/book/${isbn}/check`
+    );
+  }
 }

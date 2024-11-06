@@ -1,7 +1,8 @@
-import { Component,  Output, EventEmitter, Input, OnChanges } from '@angular/core';
+import { Component, inject, Output, EventEmitter, Input, OnChanges } from '@angular/core';
 import { Book } from '../../shared/book';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { atLeastOneValue, isbnFormat } from '../shared/validators';
+import { AsyncValidatorsService } from '../shared/async-validators.service';
 
 @Component({
   selector: 'bm-book-form',
@@ -23,6 +24,9 @@ export class BookFormComponent implements OnChanges {
         validators: [
           Validators.required,
           isbnFormat
+        ],
+        asyncValidators: [
+          inject(AsyncValidatorsService).isbnExists()
         ]
       }),
       description: new FormControl('', { nonNullable: true }),
