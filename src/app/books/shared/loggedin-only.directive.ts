@@ -1,4 +1,4 @@
-import { Directive, OnDestroy } from '@angular/core';
+import { Directive, OnDestroy, TemplateRef, ViewContainerRef } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 
 import { AuthService } from '../../shared/auth.service'
@@ -9,11 +9,18 @@ import { AuthService } from '../../shared/auth.service'
 export class LoggedinOnlyDirective implements OnDestroy {
   private destroy$ = new Subject<void>();
 
-  constructor(private authService: AuthService) {
+  constructor(
+    private template: TemplateRef<unknown>,
+    private viewContainer: ViewContainerRef,
+    private authService: AuthService) {
     this.authService.isAuthenticated$.pipe(
       takeUntil(this.destroy$)
     ).subscribe(isAuthenticated => {
-      //TODO
+      if (isAuthenticated) {
+        this.viewContainer.createEmbeddedView(this.template);
+      } else {
+        this.viewContainer.clear();
+      }
     });
    }
 
