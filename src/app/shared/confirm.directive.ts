@@ -1,7 +1,8 @@
 import { Directive, Input, Output, EventEmitter, HostListener } from '@angular/core';
 
 @Directive({
-  selector: '[bmConfirm]'
+  selector: '[bmConfirm]',
+  standalone: true
 })
 export class ConfirmDirective {
   @Input ('bmConfirm') confirmText?: string;
