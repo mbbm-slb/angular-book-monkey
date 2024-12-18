@@ -1,7 +1,7 @@
 import { Directive, OnDestroy, TemplateRef, ViewContainerRef } from '@angular/core';
 import { Subject, takeUntil } from 'rxjs';
 
-import { AuthService } from '../../shared/auth.service'
+import { AuthService } from './auth.service'
 
 @Directive({
   selector: '[bmLoggedinOnly]'
