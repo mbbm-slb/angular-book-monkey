@@ -1,12 +1,12 @@
 
-import { BookStoreService } from './book-store.service';
+import { BookStoreServiceOld } from './book-store.service';
 
 describe('BookStoreService', () => {
 
-  let service: BookStoreService;
+  let service: BookStoreServiceOld;
 
   beforeEach(() => {
-    service = new BookStoreService();
+    service = new BookStoreServiceOld();
   });
 
   it('should hold a hardcoded list of 2 books', () => {
