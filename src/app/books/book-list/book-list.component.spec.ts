@@ -1,29 +1,28 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { BookListComponent } from './book-list.component';
-
 import { Book } from '../../shared/book';
 
 describe('BookListComponent', () => {
   let component: BookListComponent;
+  let fixture: ComponentFixture<BookListComponent>;
 
-  beforeEach(() => {
-    component = new BookListComponent();
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [BookListComponent]
+    }).compileComponents();
+    fixture = TestBed.createComponent(BookListComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
   });
 
-  // trivial test
-  it('should hold a hardcoded list of 2 books', () => {
-    expect(component.books).toHaveSize(2);
-  });
-
-  // test subscribes to the event emitter and checks if the book is passed correctly as event payload
-  it('should trigger an event on "doSelect"', () => {
-    const sentBook = {} as Book;
+  it('should trigger an event on click', () => {
     let receivedBook: Book | undefined;
+
     component.selectBook.subscribe(book => {
       receivedBook = book;
     });
-    component.doSelect(sentBook);
-    expect(receivedBook).toBe(sentBook);  // "toBe" compares references! i.e. variable must be the same object
+
+    fixture.nativeElement.querySelector('bm-book-list-item').click();
+    expect(receivedBook?.title).toBe('Tierisch gut kochen');
   });
 });
