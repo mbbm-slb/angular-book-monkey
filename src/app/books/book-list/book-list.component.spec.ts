@@ -1,8 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BookListComponent } from './book-list.component';
+//import { TestBookListItemComponent } from '../test-book-list-item/test-book-list-item.component';
+
 import { Book } from '../../shared/book';
 
-import { NO_ERRORS_SCHEMA } from '@angular/core';
+import { Component, Input } from '@angular/core';
+
+@Component({
+selector: 'bm-book-list-item',
+template: ''
+})
+export class TestBookListItemComponent {
+  @Input() book?: Book;
+}
 
 describe('BookListComponent', () => {
   let component: BookListComponent;
@@ -10,8 +20,7 @@ describe('BookListComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [BookListComponent],
-      schemas: [NO_ERRORS_SCHEMA] // Shallow Unit Test. BookListItem wird nicht gerendert. Alternativ muss man BookListItem hier einbinden. Siehe Kap. 8
+      declarations: [BookListComponent, TestBookListItemComponent],
     }).compileComponents();
     fixture = TestBed.createComponent(BookListComponent);
     component = fixture.componentInstance;
